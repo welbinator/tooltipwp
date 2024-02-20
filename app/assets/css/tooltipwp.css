@@ -1,0 +1,33 @@
+.tooltip::after {
+    /* content: attr(data-icon);  */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    z-index: 1;
+    transform: translateX(-50%);
+    opacity: 1; /* Set the initial opacity to 1 */
+}
+.tooltip-icon {
+    margin-left: 5px;
+    display: inline;
+}
+/* Hide the Tooltip Text by default */
+.tooltip-icon::after {
+    content: attr(data-tooltip); /* Display the tooltip text on hover */
+    visibility: hidden;
+    position: absolute;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    font-family: Arial, sans-serif; /* Customize the font here */
+    font-size: 14px; /* Customize the font size */
+    font-weight: normal; /* Customize the font weight */
+    
+    transform: translateY(-100%);
+    background-color: pink;
+}
+
+/* Show the Tooltip Text on hover */
+.tooltip-icon:hover::after {
+    visibility: visible;
+}
