@@ -3,59 +3,55 @@
 namespace TooltipWP\GitHubUpdater;
 
 function my_plugin_check_for_updates($transient) {
-    // error_log("check for updates called");
-    // Your GitHub username and repository name
+    error_log("check for updates called");
+
     $owner = 'welbinator';
     $repo = 'tooltipwp';
 
-    // Only proceed if this is a plugin update check
     if (empty($transient->checked)) {
         return $transient;
     }
 
-    // GitHub API URL to get the latest release
+    // Fetch the latest release from GitHub
     $api_url = "https://api.github.com/repos/$owner/$repo/releases/latest";
-
-    // Fetch the latest release information
     $response = wp_remote_get($api_url, [
         'headers' => ['User-Agent' => 'WordPress']
     ]);
-    
-    
 
     if (is_wp_error($response)) {
         error_log('GitHub API Error: ' . $response->get_error_message());
-        return $transient; // Return early if there's an error
+        return $transient;
     }
 
     $release = json_decode(wp_remote_retrieve_body($response), true);
-    // error_log(print_r($release, true));
-
-
-    if (isset($release['tag_name']) && isset($release['assets'][0]['browser_download_url'])) {
-        $latest_version = ltrim($release['tag_name'], 'v'); // Remove "v" prefix if present
-        $download_url = $release['assets'][0]['browser_download_url'];
-
-        // Plugin's current version from its header
-        $plugin_data = get_plugin_data(__FILE__);
-        $current_version = $plugin_data['Version'];
-
-        // Check if a new version is available
-        if (version_compare($latest_version, $current_version, '>')) {
-            $plugin_slug = 'tooltipwp/tooltipwp.php';
-
-
-            $transient->response[$plugin_slug] = (object) [
-                'slug' => $plugin_slug,
-                'new_version' => $latest_version,
-                'package' => $download_url,
-                'url' => $release['html_url'], // Link to the release page
-            ];
-        }
-    } else {
+    if (!isset($release['tag_name'], $release['assets'][0]['browser_download_url'])) {
         error_log('No valid release data or assets found.');
+        return $transient;
     }
-    // error_log(print_r($transient, true));
+
+    $latest_version = ltrim($release['tag_name'], 'v'); // Remove "v" prefix if present
+    $download_url = $release['assets'][0]['browser_download_url'];
+
+    // Get the current version of the installed plugin
+    $plugin_slug = 'tooltipwp/tooltipwp.php';
+    $current_version = $transient->checked[$plugin_slug] ?? null;
+    error_log($current_version);
+
+    // Skip adding update if current version equals latest version
+    if ($current_version && version_compare($latest_version, $current_version, '<=')) {
+        error_log("Current version ($current_version) is up to date.");
+        return $transient;
+    }
+
+    // Add update data to the transient
+    $transient->response[$plugin_slug] = (object) [
+        'slug' => $plugin_slug,
+        'new_version' => $latest_version,
+        'package' => $download_url,
+        'url' => $release['html_url'], // Link to the release page
+    ];
+
+    error_log("Update available: $latest_version");
     return $transient;
 }
 add_filter('pre_set_site_transient_update_plugins', __NAMESPACE__ . '\\my_plugin_check_for_updates');

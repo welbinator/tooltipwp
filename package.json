@@ -1,6 +1,6 @@
 {
   "name": "tooltipwp",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Tool tips for WordPress",
   "main": "index.js",
   "scripts": {
