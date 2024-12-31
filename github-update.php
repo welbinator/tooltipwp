@@ -3,6 +3,7 @@
 namespace TooltipWP\GitHubUpdater;
 
 function my_plugin_check_for_updates($transient) {
+    // error_log("check for updates called");
     // Your GitHub username and repository name
     $owner = 'welbinator';
     $repo = 'tooltipwp';
@@ -19,6 +20,8 @@ function my_plugin_check_for_updates($transient) {
     $response = wp_remote_get($api_url, [
         'headers' => ['User-Agent' => 'WordPress']
     ]);
+    
+    
 
     if (is_wp_error($response)) {
         error_log('GitHub API Error: ' . $response->get_error_message());
@@ -26,7 +29,7 @@ function my_plugin_check_for_updates($transient) {
     }
 
     $release = json_decode(wp_remote_retrieve_body($response), true);
-    error_log(print_r($release, true));
+    // error_log(print_r($release, true));
 
 
     if (isset($release['tag_name']) && isset($release['assets'][0]['browser_download_url'])) {
@@ -39,7 +42,8 @@ function my_plugin_check_for_updates($transient) {
 
         // Check if a new version is available
         if (version_compare($latest_version, $current_version, '>')) {
-            $plugin_slug = plugin_basename(__FILE__);
+            $plugin_slug = 'tooltipwp/tooltipwp.php';
+
 
             $transient->response[$plugin_slug] = (object) [
                 'slug' => $plugin_slug,
@@ -51,10 +55,11 @@ function my_plugin_check_for_updates($transient) {
     } else {
         error_log('No valid release data or assets found.');
     }
-    error_log(print_r($transient, true));
+    // error_log(print_r($transient, true));
     return $transient;
 }
 add_filter('pre_set_site_transient_update_plugins', __NAMESPACE__ . '\\my_plugin_check_for_updates');
+
 
 function github_plugin_updater_user_agent($args) {
     $args['user-agent'] = 'WordPress/' . get_bloginfo('version') . '; ' . home_url();

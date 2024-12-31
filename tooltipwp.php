@@ -3,7 +3,7 @@
  * Plugin Name: ToolTipWP
  * Plugin URI: https://roadmapwp.com/tooltipwp
  * Description: A plugin to easily add tooltips to your WordPress site.
- * Version: 1.0.2.2
+ * Version: 1.0.4
  * Author: James Welbes
  * Author URI: https://roadmapwp.com
  * License: GPL v2 or later
@@ -22,6 +22,7 @@ require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
 
 if (file_exists(TOOLTIP_FOR_WP_PATH . 'github-update.php')) {
     include TOOLTIP_FOR_WP_PATH . 'github-update.php';
+	// delete_site_transient('update_plugins');
 } else {
     error_log('github-update.php not found in ' . TOOLTIP_FOR_WP_PATH);
 }
@@ -34,8 +35,8 @@ if (file_exists(TOOLTIP_FOR_WP_PATH . 'github-update.php')) {
 function enqueue_scripts() {
 	wp_enqueue_style( 'tooltipwp-fontawesome', plugins_url( 'build/scripts.css', __FILE__ ) );
 	wp_enqueue_style( 'tooltipwp-style', plugins_url( 'app/assets/css/tooltipwp.css', __FILE__ ) );
-	wp_enqueue_script( 'tooltipwp-build-script', plugins_url( 'build/scripts.js', __FILE__ ), array(), '1.0.2.2', true );
-	wp_enqueue_script( 'tooltipwp-script', plugins_url( 'app/assets/js/tooltipwp.js', __FILE__ ), array( 'jquery' ), '1.0.2.2', true );
+	wp_enqueue_script( 'tooltipwp-build-script', plugins_url( 'build/scripts.js', __FILE__ ), array(), '1.0.4', true );
+	wp_enqueue_script( 'tooltipwp-script', plugins_url( 'app/assets/js/tooltipwp.js', __FILE__ ), array( 'jquery' ), '1.0.4', true );
 	localize_script();
 }
 
@@ -49,7 +50,7 @@ function enqueue_admin_scripts() {
         'tooltipwp-admin-script',
         plugins_url('app/assets/js/admin-scripts.js', __FILE__),
         array('jquery'),
-        '1.0.2.2',
+        '1.0.4',
         true
     );
 
@@ -82,13 +83,7 @@ function localize_script() {
 		$position = get_post_meta( $tooltip->ID, '_tooltip_position', true );
 		$icon     = get_post_meta( $tooltip->ID, '_tooltip_icon', true );
 
-		// Log individual values
-		error_log( 'Tooltip ID: ' . $tooltip->ID );
-		error_log( 'Text: ' . $text );
-		error_log( 'Class: ' . $class );
-		error_log( 'Position: ' . $position );
-		error_log( 'Icon: ' . $icon );
-
+		
 		$tooltip_data[] = array(
 			'text'     => $text,
 			'class'    => $class,
@@ -96,7 +91,7 @@ function localize_script() {
 			'icon'     => $icon,
 		);
 	}
-	error_log( print_r( $tooltip_data, true ) ); // Log tooltip data
+	
 	wp_localize_script( 'tooltipwp-script', 'tooltipData', $tooltip_data );
 }
 
@@ -221,7 +216,7 @@ function class_meta_box_html( $post ) {
  * @param int $post_id The ID of the current post being saved.
  */
 function save_tooltip_meta_boxes_data( $post_id ) {
-	error_log( 'POST data: ' . print_r( $_POST, true ) );
+	
 	if ( array_key_exists( 'tooltip_text', $_POST ) ) {
 		update_post_meta(
 			$post_id,
@@ -238,11 +233,11 @@ function save_tooltip_meta_boxes_data( $post_id ) {
 	}
 	if ( isset( $_POST['tooltip_position'] ) ) {
 		update_post_meta( $post_id, '_tooltip_position', sanitize_text_field( $_POST['tooltip_position'] ) );
-		error_log( 'Position saved: ' . sanitize_text_field( $_POST['tooltip_position'] ) );
+		
 	}
 	if ( isset( $_POST['tooltip_icon'] ) ) {
 		update_post_meta( $post_id, '_tooltip_icon', sanitize_text_field( $_POST['tooltip_icon'] ) );
-		error_log( 'Icon saved: ' . sanitize_text_field( $_POST['tooltip_icon'] ) );
+		
 	}
 }
 
