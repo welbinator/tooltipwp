@@ -22,9 +22,10 @@
     font-family: Arial, sans-serif; /* Customize the font here */
     font-size: 14px; /* Customize the font size */
     font-weight: normal; /* Customize the font weight */
-    
     transform: translateY(-100%);
     background-color: pink;
+    width: 100%;
+    max-width: 200px;
 }
 
 /* Show the Tooltip Text on hover */
