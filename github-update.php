@@ -1,5 +1,7 @@
 <?php 
 
+namespace TooltipWP\GitHubUpdater;
+
 function my_plugin_check_for_updates($transient) {
     // Your GitHub username and repository name
     $owner = 'welbinator';

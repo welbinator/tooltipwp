@@ -1,5 +1,7 @@
 <?php
 
+namespace TooltipWP\Ajax;
+
 add_action('wp_ajax_create_new_tooltip', 'create_new_tooltip_handler');
 
 function create_new_tooltip_handler() {
