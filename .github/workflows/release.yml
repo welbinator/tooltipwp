@@ -1,4 +1,4 @@
-name: Create Release for ToolTips Plugin
+name: Create Release for ToolTipWP Plugin
 
 on:
   workflow_dispatch:
@@ -29,18 +29,18 @@ jobs:
 
       # Rename directory to the desired folder name
       - name: Rename directory
-        run: mv temp_dir tooltips
+        run: mv temp_dir tooltipwp
 
       # Zip the packaged files
       - name: Create zip archive
         run: |
-          zip -r tooltips-${{ github.event.inputs.tag }}.zip tooltips
+          zip -r tooltipwp-${{ github.event.inputs.tag }}.zip tooltipwp
 
       # Create a new GitHub release with the packaged zip
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: tooltips-${{ github.event.inputs.tag }}.zip
+          files: tooltipwp-${{ github.event.inputs.tag }}.zip
           tag_name: ${{ github.event.inputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
