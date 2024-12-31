@@ -18,6 +18,12 @@ require_once plugin_dir_path( __FILE__ ) . 'app/functions.php';
 
 require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
 
+if (file_exists(YT_FOR_WP_PATH . 'github-update.php')) {
+    include YT_FOR_WP_PATH . 'github-update.php';
+} else {
+    error_log('github-update.php not found in ' . YT_FOR_WP_PATH);
+}
+
 /**
  * Enqueues scripts and styles for the plugin.
  *

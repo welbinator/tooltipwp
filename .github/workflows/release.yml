@@ -23,6 +23,7 @@ jobs:
       - name: Copy necessary files to the temporary directory
         run: |
           cp tooltipwp.php temp_dir/
+          cp github-update.php temp_dir/
           cp -r app temp_dir/app
           cp -r build temp_dir/build
 
