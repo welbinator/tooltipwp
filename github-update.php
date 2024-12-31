@@ -16,12 +16,18 @@ function my_plugin_check_for_updates($transient) {
     $api_url = "https://api.github.com/repos/$owner/$repo/releases/latest";
 
     // Fetch the latest release information
-    $response = wp_remote_get($api_url, ['headers' => ['User-Agent' => 'WordPress']]);
+    $response = wp_remote_get($api_url, [
+        'headers' => ['User-Agent' => 'WordPress']
+    ]);
+
     if (is_wp_error($response)) {
+        error_log('GitHub API Error: ' . $response->get_error_message());
         return $transient; // Return early if there's an error
     }
 
     $release = json_decode(wp_remote_retrieve_body($response), true);
+    error_log(print_r($release, true));
+
 
     if (isset($release['tag_name']) && isset($release['assets'][0]['browser_download_url'])) {
         $latest_version = ltrim($release['tag_name'], 'v'); // Remove "v" prefix if present
@@ -42,8 +48,10 @@ function my_plugin_check_for_updates($transient) {
                 'url' => $release['html_url'], // Link to the release page
             ];
         }
+    } else {
+        error_log('No valid release data or assets found.');
     }
-
+    error_log(print_r($transient, true));
     return $transient;
 }
 add_filter('pre_set_site_transient_update_plugins', __NAMESPACE__ . '\\my_plugin_check_for_updates');
