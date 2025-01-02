@@ -44,6 +44,7 @@ function enqueue_scripts() {
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_scripts' );
 
+
 /**
  * Enqueues admin-specific scripts for the plugin.
  */
@@ -62,6 +63,9 @@ function enqueue_admin_scripts() {
         'ajax_object',
         array('ajaxurl' => admin_url('admin-ajax.php'))
     );
+
+	wp_enqueue_style('wp-color-picker');
+    wp_enqueue_script('tooltipwp-admin-scripts', plugin_dir_url(__FILE__) . 'app/assets/js/admin-color-picker.js', array('wp-color-picker', 'jquery'), '1.0.0', true);
 }
 
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_scripts');

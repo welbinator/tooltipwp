@@ -37,9 +37,11 @@ function tooltipwp_render_settings_page() {
 add_action('admin_init', 'tooltipwp_register_settings');
 
 function tooltipwp_register_settings() {
-    // Register settings for the two color options
+    // Register settings
     register_setting('tooltipwp_settings_group', 'tooltipwp_background_color');
     register_setting('tooltipwp_settings_group', 'tooltipwp_text_color');
+    register_setting('tooltipwp_settings_group', 'tooltipwp_border_color');
+    register_setting('tooltipwp_settings_group', 'tooltipwp_border_thickness');
 
     // Add a settings section
     add_settings_section(
@@ -49,22 +51,37 @@ function tooltipwp_register_settings() {
         'tooltipwp-settings' // Page slug
     );
 
-    // Add the "Tooltip Background Color" field
+    // Add fields
     add_settings_field(
-        'tooltipwp_background_color', // Field ID
-        'Tooltip Background Color', // Title
-        'tooltipwp_background_color_callback', // Callback function
-        'tooltipwp-settings', // Page slug
-        'tooltipwp_settings_section' // Section ID
+        'tooltipwp_background_color',
+        'Tooltip Background Color',
+        'tooltipwp_background_color_callback',
+        'tooltipwp-settings',
+        'tooltipwp_settings_section'
     );
 
-    // Add the "Tooltip Text Color" field
     add_settings_field(
-        'tooltipwp_text_color', // Field ID
-        'Tooltip Text Color', // Title
-        'tooltipwp_text_color_callback', // Callback function
-        'tooltipwp-settings', // Page slug
-        'tooltipwp_settings_section' // Section ID
+        'tooltipwp_text_color',
+        'Tooltip Text Color',
+        'tooltipwp_text_color_callback',
+        'tooltipwp-settings',
+        'tooltipwp_settings_section'
+    );
+
+    add_settings_field(
+        'tooltipwp_border_color',
+        'Tooltip Border Color',
+        'tooltipwp_border_color_callback',
+        'tooltipwp-settings',
+        'tooltipwp_settings_section'
+    );
+
+    add_settings_field(
+        'tooltipwp_border_thickness',
+        'Tooltip Border Thickness',
+        'tooltipwp_border_thickness_callback',
+        'tooltipwp-settings',
+        'tooltipwp_settings_section'
     );
 }
 
@@ -76,11 +93,29 @@ function tooltipwp_settings_section_callback() {
 // Field callback for "Tooltip Background Color"
 function tooltipwp_background_color_callback() {
     $value = get_option('tooltipwp_background_color', '#ffffff'); // Default to white
-    echo '<input type="color" name="tooltipwp_background_color" value="' . esc_attr($value) . '">';
+    $default = '#ffffff';
+    echo '<input type="text" class="tooltipwp-color-picker" name="tooltipwp_background_color" value="' . esc_attr($value) . '" data-default-color="' . esc_attr($default) . '">';
+    // echo '<button type="button" class="button tooltipwp-reset-color" data-default-color="' . esc_attr($default) . '">Reset</button>';
 }
 
 // Field callback for "Tooltip Text Color"
 function tooltipwp_text_color_callback() {
     $value = get_option('tooltipwp_text_color', '#000000'); // Default to black
-    echo '<input type="color" name="tooltipwp_text_color" value="' . esc_attr($value) . '">';
+    $default = '#000000';
+    echo '<input type="text" class="tooltipwp-color-picker" name="tooltipwp_text_color" value="' . esc_attr($value) . '" data-default-color="' . esc_attr($default) . '">';
+    // echo '<button type="button" class="button tooltipwp-reset-color" data-default-color="' . esc_attr($default) . '">Reset</button>';
+}
+
+// Field callback for "Tooltip Border Color"
+function tooltipwp_border_color_callback() {
+    $value = get_option('tooltipwp_border_color', '#000000'); // Default to black
+    $default = '#000000';
+    echo '<input type="text" class="tooltipwp-color-picker" name="tooltipwp_border_color" value="' . esc_attr($value) . '" data-default-color="' . esc_attr($default) . '">';
+    // echo '<button type="button" class="button tooltipwp-reset-color" data-default-color="' . esc_attr($default) . '">Reset</button>';
+}
+
+// Field callback for "Tooltip Border Thickness"
+function tooltipwp_border_thickness_callback() {
+    $value = get_option('tooltipwp_border_thickness', '1'); // Default to 1
+    echo '<input type="number" name="tooltipwp_border_thickness" value="' . esc_attr($value) . '" min="0" step="1">';
 }

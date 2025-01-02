@@ -62,11 +62,14 @@ function tooltipwp_enqueue_with_inline_styles() {
     // Add inline styles dynamically
     $background_color = get_option('tooltipwp_background_color', '#ffc0cb'); // Default to pink
     $text_color = get_option('tooltipwp_text_color', '#000000'); // Default to black
+    $border_color = get_option('tooltipwp_border_color', $background_color); 
+    $border_thickness = get_option('tooltipwp_border_thickness', '1px'); 
 
     $custom_css = "
     .tooltip-icon::after {
         background-color: {$background_color};
         color: {$text_color};
+        border: {$border_thickness}px solid {$border_color};
     }";
 
     // Add inline styles
