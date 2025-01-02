@@ -3,7 +3,7 @@
  * Plugin Name: ToolTipWP
  * Plugin URI: https://roadmapwp.com/tooltipwp
  * Description: A plugin to easily add tooltips to your WordPress site.
- * Version: 1.0.9
+ * Version: 1.1.0
  * Author: James Welbes
  * Author URI: https://roadmapwp.com
  * License: GPL v2 or later
@@ -20,6 +20,8 @@ require_once plugin_dir_path( __FILE__ ) . 'app/functions.php';
 
 require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
 
+require_once plugin_dir_path( __FILE__ ) . 'app/admin-settings.php';
+
 if (file_exists(TOOLTIP_FOR_WP_PATH . 'github-update.php')) {
     include TOOLTIP_FOR_WP_PATH . 'github-update.php';
 	// delete_site_transient('update_plugins');
@@ -35,12 +37,13 @@ if (file_exists(TOOLTIP_FOR_WP_PATH . 'github-update.php')) {
 function enqueue_scripts() {
 	wp_enqueue_style( 'tooltipwp-fontawesome', plugins_url( 'build/scripts.css', __FILE__ ) );
 	wp_enqueue_style( 'tooltipwp-style', plugins_url( 'app/assets/css/tooltipwp.css', __FILE__ ) );
-	wp_enqueue_script( 'tooltipwp-build-script', plugins_url( 'build/scripts.js', __FILE__ ), array(), '1.0.9', true );
-	wp_enqueue_script( 'tooltipwp-script', plugins_url( 'app/assets/js/tooltipwp.js', __FILE__ ), array( 'jquery' ), '1.0.9', true );
+	wp_enqueue_script( 'tooltipwp-build-script', plugins_url( 'build/scripts.js', __FILE__ ), array(), '1.1.0', true );
+	wp_enqueue_script( 'tooltipwp-script', plugins_url( 'app/assets/js/tooltipwp.js', __FILE__ ), array( 'jquery' ), '1.1.0', true );
 	localize_script();
 }
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_scripts' );
+
 
 /**
  * Enqueues admin-specific scripts for the plugin.
@@ -50,7 +53,7 @@ function enqueue_admin_scripts() {
         'tooltipwp-admin-script',
         plugins_url('app/assets/js/admin-scripts.js', __FILE__),
         array('jquery'),
-        '1.0.9',
+        '1.1.0',
         true
     );
 
@@ -60,6 +63,9 @@ function enqueue_admin_scripts() {
         'ajax_object',
         array('ajaxurl' => admin_url('admin-ajax.php'))
     );
+
+	wp_enqueue_style('wp-color-picker');
+    wp_enqueue_script('tooltipwp-admin-scripts', plugin_dir_url(__FILE__) . 'app/assets/js/admin-color-picker.js', array('wp-color-picker', 'jquery'), '1.0.0', true);
 }
 
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_scripts');

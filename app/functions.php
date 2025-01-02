@@ -55,3 +55,27 @@ function tooltip_creation_meta_box_html( $post ) {
     <?php
 }
 
+function tooltipwp_enqueue_with_inline_styles() {
+    // Enqueue the main stylesheet
+    wp_enqueue_style('tooltipwp-style', plugins_url('assets/css/tooltipwp.css', __FILE__));
+
+    // Add inline styles dynamically
+    $background_color = get_option('tooltipwp_background_color', '#ffc0cb'); // Default to pink
+    $text_color = get_option('tooltipwp_text_color', '#000000'); // Default to black
+    $border_color = get_option('tooltipwp_border_color', $background_color); 
+    $border_thickness = get_option('tooltipwp_border_thickness', '1px'); 
+
+    $custom_css = "
+    .tooltip-icon::after {
+        background-color: {$background_color};
+        color: {$text_color};
+        border: {$border_thickness}px solid {$border_color};
+    }";
+
+    // Add inline styles
+    wp_add_inline_style('tooltipwp-style', $custom_css);
+}
+add_action('wp_enqueue_scripts', 'TooltipWP\\Functions\\tooltipwp_enqueue_with_inline_styles');
+
+
+
