@@ -20,6 +20,8 @@ require_once plugin_dir_path( __FILE__ ) . 'app/functions.php';
 
 require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
 
+require_once plugin_dir_path( __FILE__ ) . 'app/admin-settings.php';
+
 if (file_exists(TOOLTIP_FOR_WP_PATH . 'github-update.php')) {
     include TOOLTIP_FOR_WP_PATH . 'github-update.php';
 	// delete_site_transient('update_plugins');

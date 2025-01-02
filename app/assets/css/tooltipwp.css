@@ -15,7 +15,6 @@
     content: attr(data-tooltip); /* Display the tooltip text on hover */
     visibility: hidden;
     position: absolute;
-    color: rgb(0, 0, 0);
     text-align: center;
     border-radius: 6px;
     padding: 5px;
@@ -23,7 +22,6 @@
     font-size: 14px; /* Customize the font size */
     font-weight: normal; /* Customize the font weight */
     transform: translateY(-100%);
-    background-color: pink;
     width: 100%;
     max-width: 200px;
 }
