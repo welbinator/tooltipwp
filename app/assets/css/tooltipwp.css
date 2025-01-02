@@ -7,7 +7,7 @@
     opacity: 1; /* Set the initial opacity to 1 */
 }
 .tooltip-icon {
-    margin-left: 5px;
+    margin: 5px;
     display: inline;
 }
 /* Hide the Tooltip Text by default */
