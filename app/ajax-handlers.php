@@ -2,7 +2,7 @@
 
 namespace TooltipWP\Ajax;
 
-add_action('wp_ajax_create_new_tooltip', 'create_new_tooltip_handler');
+add_action('wp_ajax_create_new_tooltip', __NAMESPACE__ . '\\create_new_tooltip_handler');
 
 function create_new_tooltip_handler() {
     // Check for nonce for security

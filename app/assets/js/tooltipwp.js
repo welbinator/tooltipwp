@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
     tooltipData.forEach(function(tooltip) {
         console.log('Processing tooltip:', tooltip);
         $('.' + tooltip.class).each(function() {
-            $(this).addClass('tooltip');
+            $(this).addClass('tooltipwp_tooltip');
             // $(this).attr('data-tooltip', tooltip.text);
 
             // Create an <i> element with the Font Awesome class

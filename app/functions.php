@@ -2,7 +2,7 @@
 
 namespace TooltipWP\Functions;
 
-add_action('add_meta_boxes', 'add_tooltip_creation_meta_box');
+add_action('add_meta_boxes', __NAMESPACE__ . '\\add_tooltip_creation_meta_box');
 
 function add_tooltip_creation_meta_box() {
     add_meta_box(

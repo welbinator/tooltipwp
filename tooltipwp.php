@@ -62,7 +62,7 @@ function enqueue_admin_scripts() {
     );
 }
 
-add_action('admin_enqueue_scripts', 'TooltipWP\\enqueue_admin_scripts');
+add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_scripts');
 
 /**
  * Localizes the tooltip script.
@@ -173,7 +173,7 @@ function add_tooltip_meta_boxes() {
 	);
 }
 
-add_action( 'add_meta_boxes', 'TooltipWP\\add_tooltip_meta_boxes' );
+add_action( 'add_meta_boxes', __NAMESPACE__ . '\\add_tooltip_meta_boxes' );
 
 /**
  * Outputs the HTML for the tooltip text meta box.
@@ -241,7 +241,7 @@ function save_tooltip_meta_boxes_data( $post_id ) {
 	}
 }
 
-add_action( 'save_post', 'TooltipWP\\save_tooltip_meta_boxes_data' );
+add_action( 'save_post', __NAMESPACE__ . '\\save_tooltip_meta_boxes_data' );
 
 
 /**
