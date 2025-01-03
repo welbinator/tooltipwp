@@ -3,7 +3,7 @@
  * Plugin Name: ToolTipWP
  * Plugin URI: https://roadmapwp.com/tooltipwp
  * Description: A plugin to easily add tooltips to your WordPress site.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: James Welbes
  * Author URI: https://roadmapwp.com
  * License: GPL v2 or later
@@ -37,8 +37,8 @@ if (file_exists(TOOLTIP_FOR_WP_PATH . 'github-update.php')) {
 function enqueue_scripts() {
 	wp_enqueue_style( 'tooltipwp-fontawesome', plugins_url( 'build/scripts.css', __FILE__ ) );
 	wp_enqueue_style( 'tooltipwp-style', plugins_url( 'app/assets/css/tooltipwp.css', __FILE__ ) );
-	wp_enqueue_script( 'tooltipwp-build-script', plugins_url( 'build/scripts.js', __FILE__ ), array(), '1.1.0', true );
-	wp_enqueue_script( 'tooltipwp-script', plugins_url( 'app/assets/js/tooltipwp.js', __FILE__ ), array( 'jquery' ), '1.1.0', true );
+	wp_enqueue_script( 'tooltipwp-build-script', plugins_url( 'build/scripts.js', __FILE__ ), array(), '1.1.1', true );
+	wp_enqueue_script( 'tooltipwp-script', plugins_url( 'app/assets/js/tooltipwp.js', __FILE__ ), array( 'jquery' ), '1.1.1', true );
 	localize_script();
 }
 
@@ -53,7 +53,7 @@ function enqueue_admin_scripts() {
         'tooltipwp-admin-script',
         plugins_url('app/assets/js/admin-scripts.js', __FILE__),
         array('jquery'),
-        '1.1.0',
+        '1.1.1',
         true
     );
 
