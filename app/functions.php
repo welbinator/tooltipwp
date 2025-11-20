@@ -8,7 +8,7 @@ function add_tooltip_creation_meta_box() {
     add_meta_box(
         'tooltip-creation-box',            // Unique ID for the meta box
         'Create New Tooltip',              // Title of the meta box
-        'tooltip_creation_meta_box_html',  // Callback function to output the content
+        __NAMESPACE__ . '\\tooltip_creation_meta_box_html',  // Callback function to output the content
         ['post', 'page', 'your-other-cpt'],// Post types where the box should appear
         'side',                            // Context (side for right-hand side)
         'default'                          // Priority
