@@ -3,7 +3,7 @@
  * Plugin Name: ToolTipWP
  * Plugin URI: https://roadmapwp.com/tooltipwp
  * Description: A plugin to easily add tooltips to your WordPress site.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: James Welbes
  * Author URI: https://roadmapwp.com
  * License: GPL v2 or later
@@ -15,7 +15,7 @@ namespace TooltipWP;
 defined( 'ABSPATH' ) || exit;
 
 define('TOOLTIP_FOR_WP_PATH', plugin_dir_path(__FILE__));
-define('TOOLTIPWP_VERSION', '1.1.2');
+define('TOOLTIPWP_VERSION', '1.1.3');
 
 require_once plugin_dir_path( __FILE__ ) . 'app/functions.php';
 
